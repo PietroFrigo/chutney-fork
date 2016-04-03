@@ -26,7 +26,7 @@ if [ $1 = "down" ]
   then
     for ((i=0; i<=$2; i++))
       do
-      ifconfig lo0 $1 128.0.0.$i
+      ifconfig lo0 delete 128.0.0.$i
       echo "ifconfig lo0 delete 128.0.0.$i"
     done
 

@@ -1,7 +1,13 @@
 ${include:common.i}
+
+OutboundBindAddress $ip
+SocksListenAddress $ip
+ControlListenAddress $ip
 SocksPort $socksport
 ControlPort $controlport
 CookieAuthentication 1
+# Enabled logging for the client 
+Log debug syslog
 
 #NOTE: Setting TestingClientConsensusDownloadSchedule doesn't
 #      help -- dl_stats.schedule is not DL_SCHED_CONSENSUS

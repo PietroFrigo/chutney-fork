@@ -672,7 +672,7 @@ DEFAULTS = {
     'tor': os.environ.get('CHUTNEY_TOR', 'tor'),
     'tor-gencert': os.environ.get('CHUTNEY_TOR_GENCERT', None),
     'auth_cert_lifetime': 12,
-    'ip': '127.0.0.1',
+    'ip_base': '128.0.0.',
     'ipv6_addr': None,
     'dirserver_flags': 'no-v2',
     'chutney_dir': '.',
@@ -747,7 +747,7 @@ class TorEnviron(chutney.Templating.Environ):
         return my['dirport_base'] + my['nodenum']
 
     def _get_ip(self, my):
-        return "128.0.0." + str(my['nodenum'])
+        return my['ip_base'] + str(my['nodenum'])
 
     def _get_dir(self, my):
         return os.path.abspath(os.path.join(my['net_base_dir'],
@@ -1032,12 +1032,12 @@ class Network(object):
             for op in client_list:
                 print("  Exit to %s:%d via client %s:%s"
                       % ('127.0.0.1', LISTEN_PORT,
-                         'localhost', op._env['socksport']))
+                         op._env['ip'], op._env['socksport']))
                 for i in range(connection_count):
                     tt.add(chutney.Traffic.Source(tt,
                                                   bind_to,
                                                   tmpdata,
-                                                  ('localhost',
+                                                  (op._env['ip'],
                                                    int(op._env['socksport'])),
                                                   reps))
         return exit_path_node_count
@@ -1072,12 +1072,12 @@ class Network(object):
                 print("  HS to %s:%d (%s:%d) via client %s:%s"
                       % (hs._env['hs_hostname'], HS_PORT,
                      '127.0.0.1', LISTEN_PORT,
-                     'localhost', client._env['socksport']))
+                     op._env['ip'], client._env['socksport']))
                 for i in range(connection_count):
                     tt.add(chutney.Traffic.Source(tt,
                                           hs_bind_to,
                                           tmpdata,
-                                          ('localhost',
+                                          (op._env['ip'],
                                            int(client._env['socksport'])),
                                           reps))
         return hs_path_node_count
