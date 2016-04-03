@@ -341,11 +341,11 @@ class LocalNodeBuilder(NodeBuilder):
 
     def _makeHiddenServiceDir(self):
         """Create the hidden service subdirectory for this node.
-          
+
           The directory name is stored under the 'hs_directory' environment
           key. It is combined with the 'dir' data directory key to yield the
           path to the hidden service directory.
-          
+
           448 is the decimal representation of the octal number 0700. Since
           python2 only supports 0700 and python3 only supports 0o700, we can
           use neither.
@@ -746,6 +746,9 @@ class TorEnviron(chutney.Templating.Environ):
     def _get_dirport(self, my):
         return my['dirport_base'] + my['nodenum']
 
+    def _get_ip(self, my):
+        return "128.0.0." + str(my['nodenum'])
+
     def _get_dir(self, my):
         return os.path.abspath(os.path.join(my['net_base_dir'],
                                             "nodes",
@@ -875,7 +878,7 @@ class Network(object):
         # line in wait()ing output
         print("")
         return rv
-    
+
 
     def hup(self):
         print("Sending SIGHUP to nodes")
