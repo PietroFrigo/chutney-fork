@@ -1,11 +1,11 @@
 
 # Unsupported version of chutney
 
-This version of chutney contains some modifications that lets you run the system on the `loopback` interface using different aliases for this one.   
+This version of chutney contains some modifications that lets you run the system on the `loopback` interface using different aliases on this one.   
 
-The `aliases` shell script creates different alias on the interface.
+The `aliases` shell script creates different aliases on the interface.
 The IP block used is 128.0.0.0/24 due to problems in setting the `LocalOutbounBindAddress` parameter on the torrc file.
-The scripts needs to be run with sudo permissions using the following command:
+The script needs to be run with sudo permissions using the following command:
 
 `./aliases up/down #nodes`
 
